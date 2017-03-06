@@ -19,21 +19,26 @@ Camera calibration is done in cells 2 and 3 of the first notebook. It is pretty 
 
 In the end, we find a camera matrix and distortion coefficients that I print and save as a numpy array for later use.
 
-### Provide an example of a distortion-corrected image.
+#### Provide an example of a distortion-corrected image.
 
 I check that distortion correction is working by applying it to calibration1.jpg. This is a closeup of the board and it should be easy to see it the correction is working fine. This is done in cell 5. The result can be see in:
 [image1]: ./output_images/calibration1_undistorted.png "Undistorted"
 
 I also applied the same correction to one the test images as seen in cell 6.
 
+### Thresholded binary image
+
+To obtain a thresholded binary image I used both color transforms and gradient information. To get a sense of what information was on different channels, I plotted separately channels R, B, G, H, L, and S for image test1. I took that picture for testing as it is, together with test4 the hardest to get correctly from the basic video. This is done in cell 7.
+
+#### Color Thresholding
+
+Judging by the images, the most promising channels to use are red and saturation. I did several test on the thresholding values that seemed to work well for each channel. Given those thresholds, I filter any value outside that range while keeping values within. In this step I did not convert the image to a binary representation. This is done in cells 8 and 9. I took this approach because I wanted to combine the intensity values on each channel instead of doing a union or intersection of them. I wanted for each image to reinforce each other where lanes and detected. It seems to me a better way to make use of the information to apply a combined threshold afterwards as well as convert it to binary. To do that I had to normalize the sum of both images. That is done in cell 10.
+
+#### Gradient Thresholding
 
 
 
 
-
-
-
-[//]: # (Image References)
 
 [image1]: ./examples/undistort_output.png "Undistorted"
 [image2]: ./test_images/test1.jpg "Road Transformed"
@@ -43,13 +48,10 @@ I also applied the same correction to one the test images as seen in cell 6.
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+ 
 
----
-###Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+
 
 
 ####Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
