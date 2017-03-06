@@ -36,29 +36,24 @@ Judging by the images, the most promising channels to use are red and saturation
 
 #### Gradient Thresholding
 
+I followed a very similar process with the gradients. I played for a while with threshold values to get a reasonable idea of what worked. After that, I applied the thresholding in the same way than for color, by filtering out values outside the thresholding range. This is done in cells 12 and 13.
+
+I used the results from gradients as a sort of reinforcing mask. By combining the image obtained by color thresholding with both gradient images in a linear combination fashion we can make most of the non useful stuff disappear while maintaining the lane lines. To do that, I multiplied by some tested values each image and normalize the sum afterwards. Once that is done I applied a new threshold to the combination. This is done in cell 14.
+
+This is one of the points that I think should require a more formal approach. I think that having a few images with the ground truth for this case and running a formal optimization over this parameters would help a lot in improving the detection capability.
+
+After some trial an error testing I applied the procedure to all the testing images. Results can be seen as the output of cell 16
 
 
 
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+
+
+
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
  
-
-
-
-
-
-####Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
-
-![alt text][image3]
-
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
