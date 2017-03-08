@@ -1,10 +1,10 @@
 ## Writeup
 **Advanced Lane Finding Project**
 
-I separated this project in two notebooks. The first one deals with defining the process to be applied to each image:
-[Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Advanced%20Lane%20Finding.ipynb)
-In the second one I applied that procces to the videos:
-[Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Video%20Processing.ipynb)
+I separated this project in two notebooks. The first one deals with defining the process to be applied to each image: [Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Advanced%20Lane%20Finding.ipynb)
+
+In the second one I applied that procces to the videos: [Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Video%20Processing.ipynb)
+
 Also, HTML static versions can be found in [github repository](https://github.com/albertoferna/CarND-Advanced-Lane-Lines)
 
 The goals / steps of this project are the following:
