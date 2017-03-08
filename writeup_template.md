@@ -22,7 +22,7 @@ In the end, we find a camera matrix and distortion coefficients that I print and
 #### Provide an example of a distortion-corrected image.
 
 I check that distortion correction is working by applying it to calibration1.jpg. This is a closeup of the board and it should be easy to see it the correction is working fine. This is done in cell 5. The result can be see in:
-[calibration](./output_images/calibration1_undistorted.png) "Calibration Undistorted"
+[calibration](./output_images/calibration1_undistorted.jpg) "Calibration Undistorted"
 
 I also applied the same correction to one the test images as seen in cell 6.
 
