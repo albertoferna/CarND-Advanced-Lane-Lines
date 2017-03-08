@@ -22,7 +22,7 @@ In the end, we find a camera matrix and distortion coefficients that I print and
 #### Provide an example of a distortion-corrected image.
 
 I check that distortion correction is working by applying it to calibration1.jpg. This is a closeup of the board and it should be easy to see it the correction is working fine. This is done in cell 5. The result can be see in:
-[calibration](./output_images/calibration1_undistorted.jpg) "Calibration Undistorted"
+![calibration](./output_images/calibration1_undistorted.jpg) "Calibration Undistorted"
 
 I also applied the same correction to one the test images as seen in cell 6.
 
@@ -69,6 +69,11 @@ With the polynomial calculated, finding the curvature is quite straight forward.
 With the points now in real word measurements, I fitted again a degree two polynomial. From the values of that polynomial is just a matter of using formulae to calculate the radius of curvature. That is done in cell 25.
 
 For the position I assumed that the camera is at the centerline of the car. By calculating the values of the previously fitted polynomial at the bottom of the picture (closest to the camera), we can find an estimate of how centered the camera, and the car, are. This is done in cell 26
+
+### Plotted Results
+
+In order to check the full pipeline, I applied all the steps to the images in the test directory.  To help with this, I put together a function that takes an image and returns the polynomial that fits the lane. That function “find_lane” is defined in cell 27. Drawing on top of those images is done by the function “plot_lane” defined in cell 28. Samples images from the test directory are saved in output_image with the name followed by result. This is one of those samples:
+![Test1_results](./output_images/test1_results.jpg) "Test1 Results"
 
 ### Discussion
 
