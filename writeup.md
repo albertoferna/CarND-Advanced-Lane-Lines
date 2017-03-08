@@ -44,7 +44,7 @@ This is one of the points that I think should require a more formal approach. I 
 
 After some trial and error testing I applied the procedure to all the testing images. Results can be seen as the output of cell 16. I also used that work to put together a function that taken an image would do all the steps up to a thresholded binary image, returning it.
 
-#### Perspective Transform
+### Perspective Transform
 
 The idea here is to take an image that has been corrected for camera distortion and apply a perspective transform to it. To do that we first need some reference points.
 
@@ -54,13 +54,22 @@ Next, I selected four points in straight_lines1_undistorded that define the lane
 
 Once those matrices are calculated, I do a test warping reference image in cell 19. In the following cell compile the pipeline up to this point by creating a warped and thresholded image of on of the test frames.
 
+### Finding Lanes and Fitting a Polynomial
 
+I went about this part differently than it was proposed. From looking at the test images, is seemed reasonable that our pixels of interest are going to be on two bands. To find those, I started by finding the bottom end. I believe this is a more robust approach as the bottom area of the lane lines is usually clearer. This part is similar to what has been proposed in the lessons. For this I used an histogram. I divided the picture in left and right and I looked for the maximum of the histogram on each side. That point is from then on the bottom point of each lane line. This is done in cell 22.
 
----
+Once I have those point, I mask the image with two vertical lines starting there. Those lines become a first approximation of the lane. Then, I setup a parameter that allows changing the width of that mask. Each masked area (one for right line and one for left line) is taken separately and a straight line is fitted on all white points. At this point we have improved our estimate of the lane to a straight segment inclined in the case of a curved segment of road. That is shown in cell 23.
 
-###Discussion
+The masking process is repeated with our updated estimate. This is done to improve the approximation of the area that we are going to account for in the fitting of our polynomial. Once that masking is done, I repeated the fitting process on the white pixels, but this time using a degree two polynomial. This is done in cell 24.
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+### Calculating Radius of Curvature and Position
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+With the polynomial calculated, finding the curvature is quite straight forward. The only step that requires care is converting our image from pixel space to real space. To do that, I simply took the size of the lane from the normative and scale it given our lane measurement in image pixels (lane_pixel_width). For the vertical scaling I used the approximated 30 meter measurement to the points in the image.
 
+With the points now in real word measurements, I fitted again a degree two polynomial. From the values of that polynomial is just a matter of using formulae to calculate the radius of curvature. That is done in cell 25.
+
+For the position I assumed that the camera is at the centerline of the car. By calculating the values of the previously fitted polynomial at the bottom of the picture (closest to the camera), we can find an estimate of how centered the camera, and the car, are. This is done in cell 26
+
+### Discussion
+
+As I mentioned before, I think that detection could be improved by taken a more formal approach. My parameters work quite well in the project video. In fact, even if not frame to frame interpolation is done I was able to detect the lane. However, it does not work well with the challenge videos. I believe this could be improved notably by better tunning. Also, doing some treatment of the frames to increase contrast could be effective. Adding information from some other color space, such as HSV or LMS would also be beneficial.
