@@ -1,6 +1,12 @@
 ## Writeup
 **Advanced Lane Finding Project**
 
+I separated this project in two notebooks. The first one deals with defining the process to be applied to each image:
+[Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Advanced%20Lane%20Finding.ipynb)
+In the second one I applied that procces to the videos:
+[Advanced Lane Finding.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Video%20Processing.ipynb)
+Also, HTML static versions can be found in [github repository](https://github.com/albertoferna/CarND-Advanced-Lane-Lines)
+
 The goals / steps of this project are the following:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
@@ -74,6 +80,12 @@ For the position I assumed that the camera is at the centerline of the car. By c
 
 In order to check the full pipeline, I applied all the steps to the images in the test directory.  To help with this, I put together a function that takes an image and returns the polynomial that fits the lane. That function “find_lane” is defined in cell 27. Drawing on top of those images is done by the function “plot_lane” defined in cell 28. Samples images from the test directory are saved in output_image with the name followed by result. This is one of those samples:
 ![Test1_results](./output_images/test1_results.jpg) "Test1 Results"
+
+### Video Result
+
+I wrote the pipeline for the video in a separate notebook. This time, with no need to explore alternatives, I organized the code to be applied in a video pipeline. The notebook is in my [github repository](https://github.com/albertoferna/CarND-Advanced-Lane-Lines) and it is called [Video Processing.ipynb](https://github.com/albertoferna/CarND-Advanced-Lane-Lines/blob/master/Video%20Processing.ipynb). In that repository video of the challenges can also be found.
+The processed video can be found in this [link to my video result](./project_video_processed.mp4)
+
 
 ### Discussion
 
