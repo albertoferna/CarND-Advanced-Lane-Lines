@@ -22,7 +22,7 @@ In the end, we find a camera matrix and distortion coefficients that I print and
 #### Provide an example of a distortion-corrected image.
 
 I check that distortion correction is working by applying it to calibration1.jpg. This is a closeup of the board and it should be easy to see it the correction is working fine. This is done in cell 5. The result can be see in:
-[image1]: ./output_images/calibration1_undistorted.png "Undistorted"
+[calibration](./output_images/calibration1_undistorted.png) "Calibration Undistorted"
 
 I also applied the same correction to one the test images as seen in cell 6.
 
@@ -42,71 +42,19 @@ I used the results from gradients as a sort of reinforcing mask. By combining th
 
 This is one of the points that I think should require a more formal approach. I think that having a few images with the ground truth for this case and running a formal optimization over this parameters would help a lot in improving the detection capability.
 
-After some trial an error testing I applied the procedure to all the testing images. Results can be seen as the output of cell 16
+After some trial and error testing I applied the procedure to all the testing images. Results can be seen as the output of cell 16. I also used that work to put together a function that taken an image would do all the steps up to a thresholded binary image, returning it.
+
+#### Perspective Transform
+
+The idea here is to take an image that has been corrected for camera distortion and apply a perspective transform to it. To do that we first need some reference points.
+
+The first step I take is in cell 17. I read in images in which the road is a straight line and I write them once they have been undistorted. The undistorting procedure is done with previously calculated camera matrix and distortion coefficients.
+
+Next, I selected four points in straight_lines1_undistorded that define the lane lines, and thus our interest area. From the image it is sensible to assume that those points form a rectangle over the ground plane. Therefore, if we map those to a rectangle using a perspective transformation we should get the transformation we are after. To find the points in the image before warping I just went and measure them by hand. Those are the points represented in the array “src”. Destination points are selected to occupy a reasonable and centered part of the warped image. Those are points “dest”.  The transformation matrix and its invers are calculated on cell 18.
+
+Once those matrices are calculated, I do a test warping reference image in cell 19. In the following cell compile the pipeline up to this point by creating a warped and thresholded image of on of the test frames.
 
 
-
-
-
-
-
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
-
- 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
-
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
-
-```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-
-```
-This resulted in the following source and destination points:
-
-| Source        | Destination   | 
-|:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
-
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
-
-![alt text][image4]
-
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
-
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
-
-![alt text][image5]
-
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
-
-I did this in lines # through # in my code in `my_other_file.py`
-
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
-
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
-
-![alt text][image6]
-
----
-
-###Pipeline (video)
-
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
-
-Here's a [link to my video result](./project_video.mp4)
 
 ---
 
